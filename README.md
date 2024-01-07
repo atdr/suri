@@ -1,4 +1,4 @@
-# [`atdr.eu`](atdr.eu)
+# [`atdr.eu`](https://atdr.eu)
 
 A static-site URL shortener using [suri](https://github.com/jstayton/suri)
 
