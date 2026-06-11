@@ -1,12 +1,12 @@
 {
-  "name": "suri",
+  "name": "atdr.eu",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Your own link shortener that's easily deployed as a static site (for free)",
-  "homepage": "https://github.com/atdr/suri#readme",
+  "description": "Short links for atdr.eu, built with Suri",
+  "homepage": "https://github.com/atdr/atdr.eu#readme",
   "license": "MIT",
-  "repository": "atdr/suri",
+  "repository": "atdr/atdr.eu",
   "scripts": {
     "build": "suri",
     "lint": "prettier --check .",

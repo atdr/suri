@@ -11,5 +11,5 @@ To add a new link
 1. (_Optional_)
    [Generate a 5-character random key](https://www.random.org/strings/?num=1&len=5&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new)
 2. Edit `src/links.json`
-   [directly in GitHub](https://github.com/atdr/suri/edit/main/src/links.json)
+   [directly in GitHub](https://github.com/atdr/atdr.eu/edit/main/src/links.json)
    (or locally)
