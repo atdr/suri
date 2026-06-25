@@ -4,7 +4,25 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    commit-message:
+      prefix: 'ci'
+    # Group all action bumps into one PR so they share a single CI run and can
+    # never conflict with each other.
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
+    commit-message:
+      prefix: 'chore'
+    # One PR for routine (minor/patch) bumps keeps package-lock.json conflicts
+    # to a minimum; majors stay separate so they can be reviewed individually.
+    groups:
+      npm-minor:
+        update-types:
+          - 'minor'
+          - 'patch'
