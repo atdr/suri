@@ -1,0 +1,23 @@
+name: PR
+
+# Runs the shared CI gate on pull requests targeting main (mostly Dependabot
+# dependency bumps). Merge conflicts are left to GitHub's native detection and
+# Dependabot's automatic rebasing.
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+# Cancel superseded runs when a PR is updated/rebased.
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml

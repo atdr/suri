@@ -1,0 +1,20 @@
+#!/bin/sh
+# Local safety net: run the same checks as CI before a commit is created, so
+# broken formatting or an invalid src/links.json is caught before it can be
+# pushed to main (which deploys straight to gh-pages).
+#
+# Enabled automatically via the "prepare" script in package.json
+# (git config core.hooksPath .githooks), or manually with:
+#   git config core.hooksPath .githooks
+#
+# Skip in a pinch with:  git commit --no-verify
+
+set -e
+
+echo "pre-commit: checking formatting..."
+npm run lint
+
+echo "pre-commit: validating src/links.json..."
+npm run validate
+
+echo "pre-commit: checks passed."

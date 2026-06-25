@@ -10,7 +10,10 @@
   "scripts": {
     "build": "suri",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "validate": "node scripts/validate-links.mjs",
+    "check": "npm run lint && npm run validate && npm run build",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
     "@surishortlink/suri": "^1",

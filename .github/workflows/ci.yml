@@ -1,0 +1,61 @@
+name: CI
+
+# Reusable workflow holding the single source of truth for "does this change
+# break anything?". It is called by:
+#   - pr.yml      on every pull request (mostly Dependabot dependency bumps)
+#   - deploy.yml  on every push to main, *before* the GitHub Pages deploy
+# Keeping the checks here means PRs and production deploys run the exact same
+# gate, so nothing reaches gh-pages without passing first.
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint (Prettier)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check formatting
+        run: npm run lint
+
+  validate:
+    name: Validate links.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+      # No npm install needed: the validator uses only Node built-ins.
+      - name: Validate src/links.json
+        run: npm run validate
+
+  build:
+    name: Build (Suri)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build with Suri
+        run: npm run build
