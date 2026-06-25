@@ -13,3 +13,6 @@ To add a new link
 2. Edit `src/links.json`
    [directly in GitHub](https://github.com/atdr/atdr.eu/edit/main/src/links.json)
    (or locally)
+
+Every change is checked by CI (lint, `links.json` validation, and a Suri build)
+before it deploys. Run the same checks locally with `npm run check`.
