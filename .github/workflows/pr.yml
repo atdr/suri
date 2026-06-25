@@ -1,9 +1,8 @@
 name: PR
 
-# Runs on pull requests targeting main. In this repo PRs are mostly opened by
-# Dependabot, so on top of the shared CI gate we also surface merge conflicts
-# with main early (e.g. a package-lock.json bump that no longer applies cleanly
-# after another dependency PR merged).
+# Runs the shared CI gate on pull requests targeting main (mostly Dependabot
+# dependency bumps). Merge conflicts are left to GitHub's native detection and
+# Dependabot's automatic rebasing.
 
 on:
   pull_request:
@@ -22,41 +21,3 @@ jobs:
   ci:
     name: CI
     uses: ./.github/workflows/ci.yml
-
-  conflicts:
-    name: Check for merge conflicts
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-    steps:
-      - name: Inspect mergeable state
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-          PR: ${{ github.event.pull_request.number }}
-        run: |
-          # GitHub computes "mergeable" asynchronously, so it can be null right
-          # after a push. Poll a few times before giving up.
-          state=""
-          for attempt in 1 2 3 4 5; do
-            state=$(gh api "repos/$REPO/pulls/$PR" --jq '.mergeable_state')
-            echo "Attempt $attempt: mergeable_state=$state"
-            if [ "$state" != "unknown" ] && [ -n "$state" ]; then
-              break
-            fi
-            sleep 5
-          done
-
-          case "$state" in
-            dirty)
-              echo "::error::This PR has merge conflicts with the base branch. Rebase or update it before merging."
-              exit 1
-              ;;
-            unknown|"")
-              echo "::warning::GitHub could not determine the mergeable state in time; skipping the conflict check."
-              ;;
-            *)
-              echo "No merge conflicts detected (mergeable_state=$state)."
-              ;;
-          esac

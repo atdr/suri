@@ -38,8 +38,7 @@ GitHub Actions enforces the same checks everywhere (see `.github/workflows/`):
 - `ci.yml` is a reusable workflow running lint, `links.json` validation, and the
   Suri build. It is the single source of truth for "does this change break
   anything?".
-- `pr.yml` runs `ci.yml` on every pull request (mostly Dependabot) and flags
-  merge conflicts with `main` early.
+- `pr.yml` runs `ci.yml` on every pull request (mostly Dependabot).
 - `deploy.yml` runs `ci.yml` first and only deploys to GitHub Pages if it
   passes, so a broken commit to `main` never reaches the live site.
 
