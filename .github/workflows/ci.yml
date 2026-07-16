@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
@@ -37,7 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
       # No npm install needed: the validator uses only Node built-ins.
@@ -51,7 +51,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
