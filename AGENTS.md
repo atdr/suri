@@ -6,6 +6,21 @@ devDependency) and deployed to GitHub Pages automatically on every push to
 `main`. Each entry in `src/links.json` becomes a page at `https://atdr.eu/<key>`
 that redirects to its URL via an instant `<meta>` refresh.
 
+## Git workflow: commit straight to `main`
+
+This repo deliberately does **not** use pull requests. Link changes are one-line
+edits to a data file, fully validated by the `pre-commit` hook and again by
+`deploy.yml` before anything reaches the live site, so a branch and a PR would
+add ceremony without adding safety. Commit to `main` and push.
+
+This is an intentional exception to the GitHub Flow convention used elsewhere.
+Don't open PRs here, and don't "fix" this by introducing branches. `pr.yml`
+exists only because Dependabot opens PRs.
+
+Larger structural work (build tooling, workflows, `scripts/`) is the one case
+where a branch is worth it, since those changes can break the deploy in ways the
+link validator won't catch.
+
 ## Adding a link
 
 All links live in `src/links.json` as a flat `"key": "URL"` map.
